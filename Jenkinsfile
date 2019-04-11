@@ -20,7 +20,7 @@ pipeline{
         // 定义第一个stage， 完成克隆源码的任务
         stage('Git'){
           steps{
-            git branch: '${BRANCH}', credentialsId: '', url: 'https://github.com/AliyunContainerService/jenkins-demo.git'
+            git branch: '${BRANCH}', credentialsId: '', url: 'https://github.com/kalendzhang/jenkins-demo.git'
           }
         }
 
@@ -54,7 +54,7 @@ pipeline{
                     }
                     steps {
                         container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://kubernetes.default.svc.cluster.local:443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
+                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.140.226.33:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
                         }
                     }
                 }
@@ -66,7 +66,7 @@ pipeline{
                     }
                     steps {
                         container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://kubernetes.default.svc.cluster.local:443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
+                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.140.226.33:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
                         }
                     }
                 }
