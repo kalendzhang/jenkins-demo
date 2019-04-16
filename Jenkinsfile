@@ -46,7 +46,7 @@ pipeline{
 
         stage('Deploy to Kubernetes') {
             parallel {
-                stage('Deploy to Production Environment') {
+                stage('Deploy to Staging Environment') {
                     when {
                         expression {
                             "$BRANCH" == "master"
@@ -54,19 +54,7 @@ pipeline{
                     }
                     steps {
                         container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.140.226.33:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
-                        }
-                    }
-                }
-                stage('Deploy to Staging001 Environment') {
-                    when {
-                        expression {
-                            "$BRANCH" == "latest"
-                        }
-                    }
-                    steps {
-                        container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.140.226.33:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
+                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.140.226.33:6443', credentialsId:'AuthK8sKey', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
                         }
                     }
                 }
